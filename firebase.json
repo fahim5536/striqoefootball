@@ -1,0 +1,6 @@
+{
+  "firestore": {
+    "database": "ai-studio-striqoefootball-0cbe6bff-6162-4e2e-b880-9134dc52be1d",
+    "rules": "firestore.rules"
+  }
+}

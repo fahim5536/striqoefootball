@@ -1,0 +1,57 @@
+version: '3.8'
+
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "3000:3000"
+    environment:
+      - NODE_ENV=production
+      - PORT=3000
+      - DATABASE_URL=${DATABASE_URL:-postgresql://postgres:postgres@db:5432/striqo}
+      - UPSTASH_REDIS_REST_URL=${UPSTASH_REDIS_REST_URL}
+      - UPSTASH_REDIS_REST_TOKEN=${UPSTASH_REDIS_REST_TOKEN}
+      - JWT_SECRET=${JWT_SECRET:-fallback-secret-for-dev}
+      - JWT_REFRESH_SECRET=${JWT_REFRESH_SECRET:-fallback-refresh-secret-for-dev}
+      - COOKIE_SECRET=${COOKIE_SECRET:-fallback-cookie-secret}
+      - TURNSTILE_SECRET_KEY=${TURNSTILE_SECRET_KEY:-fallback}
+      - CLOUDINARY_CLOUD_NAME=${CLOUDINARY_CLOUD_NAME:-fallback}
+      - CLOUDINARY_API_KEY=${CLOUDINARY_API_KEY:-fallback}
+      - CLOUDINARY_API_SECRET=${CLOUDINARY_API_SECRET:-fallback}
+      - GEMINI_API_KEY=${GEMINI_API_KEY:-fallback}
+      - GOOGLE_VISION_API_KEY=${GOOGLE_VISION_API_KEY:-fallback}
+      - GOOGLE_CLIENT_ID=${GOOGLE_CLIENT_ID:-fallback}
+      - GOOGLE_CLIENT_SECRET=${GOOGLE_CLIENT_SECRET:-fallback}
+      - RESEND_API_KEY=${RESEND_API_KEY:-fallback}
+      - SENTRY_DSN=${SENTRY_DSN:-fallback}
+    restart: always
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:3000/api/health/liveness"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+    depends_on:
+      db:
+        condition: service_healthy
+
+  db:
+    image: postgres:15-alpine
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_DB=striqo
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    restart: always
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres -d striqo"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+volumes:
+  postgres_data:

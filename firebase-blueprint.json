@@ -1,0 +1,12 @@
+{
+  "collections": [
+    {
+      "collectionId": "news",
+      "rules": "allow read, write: if true;"
+    },
+    {
+      "collectionId": "users",
+      "rules": "allow read, write: if true;"
+    }
+  ]
+}

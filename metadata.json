@@ -1,0 +1,8 @@
+{
+  "name": "STRIQO v2.0",
+  "description": "An IGX themed eFootball Tournament platform with custom UI, dashboards, and leaderboards.",
+  "requestFramePermissions": [],
+  "majorCapabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}
