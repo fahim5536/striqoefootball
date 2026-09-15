@@ -233,8 +233,8 @@ CLIENT_URL="http://localhost:3000"
 TZ="Asia/Dhaka"
 
 # --- PostgreSQL & Prisma Connection ---
-DATABASE_URL="postgresql://postgres:password@localhost:5432/striqo_db?schema=public"
-DIRECT_URL="postgresql://postgres:password@localhost:5432/striqo_db?schema=public"
+DATABASE_URL=""
+DIRECT_URL=""
 
 # --- Upstash Redis REST ---
 UPSTASH_REDIS_REST_URL="https://your-upstash-instance.upstash.io"
